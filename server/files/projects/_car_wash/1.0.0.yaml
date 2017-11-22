@@ -1,0 +1,493 @@
+swagger: '2.0'
+info:
+  description: 洗车接口
+  version: 1.0.0
+  title: 洗车服务接口
+  contact:
+    email: shagnzy@turingcat.com
+schemes:
+  - http
+host: www.turingcat.com
+basePath: /api
+tags:
+  - name: default
+    description: 默认
+paths:
+  /server/question:
+    get:
+      tags:
+        - 服务
+      summary: 首页>服务>常见问题
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            properties:
+              sucess:
+                type: integer
+                minimum: 1
+                maximum: 1
+              data:
+                type: object
+                properties:
+                  flagship:
+                    $ref: '#/definitions/commonQuestion'
+                  smart:
+                    $ref: '#/definitions/commonQuestion'
+  /server/diagnose:
+    post:
+      tags:
+          - 服务
+      summary: 问题诊断
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - name: proName
+          description: 产品名称
+          in: formData
+          type: string
+          required: true
+        - name: proNumber
+          description: 产品型号
+          in: formData
+          type: string
+          required: true
+        - name: caseType
+          description: 问题类型
+          in: formData
+          type: string
+          required: true
+        - name: username
+          description: 姓名
+          in: formData
+          type: string
+          required: true
+        - name: phone
+          description: 手机
+          in: formData
+          type: string
+          required: true
+        - name: email
+          description: email
+          in: formData
+          type: string
+        - name: purchaseDate
+          description: 购买日期
+          in: formData
+          type: string
+        - name: img1
+          description: 上传图片1
+          in: formData
+          type: file
+        - name: img2
+          description: 上传图片2
+          in: formData
+          type: file
+        - name: detail
+          description: 问题描述
+          in: formData
+          type: string
+          required: true
+      responses:
+        '200':
+          description: success
+          schema:
+            properties:
+              success:
+                type: integer
+                minimum: 1
+                maximum: 1
+        '400':
+          description: fail
+          schema:
+            properties:
+              err_code:
+                type: integer
+              msg:
+                type: string
+
+  /server/download/photos:
+    get:
+      tags:
+        - 服务
+      description: 服务> 资料下载> 产品照片
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            properties:
+              success:
+                type: integer
+                minimum: 1
+                maximum: 1
+              data:
+                type: array
+                items:
+                  properties:
+                    ID:
+                      description: 下载内容id
+                      type: string
+                    title:
+                      description: 图片下载标题
+                      type: string
+                    imgArr:
+                      type: array
+                      items:
+                        description: 图片url
+                        type: string
+  /server/download/instructions:
+    get:
+      tags:
+        - 服务
+      description: '服务> 资料下载> 产品说明书'
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            properties:
+              success:
+                type: integer
+                minimum: 1
+                maximum: 1
+              data:
+                type: array
+                items:
+                  properties:
+                    ID:
+                      description: 下载内容id
+                      type: string
+                    title:
+                      description: 说明书下载标题
+                      type: string
+                    imgArr:
+                      type: array
+                      items:
+                        properties:
+                          fileName:
+                            description: 说明书文件名
+                            type: string
+                          URL:
+                            description: 说明书下载url
+                            type: string
+  /server/download/brand:
+    get:
+      tags:
+        - 服务
+      description: 服务> 资料下载> 品牌相关
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            properties:
+              success:
+                type: integer
+                minimum: 1
+                maximum: 1
+              data:
+                type: array
+                items:
+                  properties:
+                    ID:
+                      description: 下载内容id
+                      type: string
+                    title:
+                      description: 品牌相关资料下载标题
+                      type: string
+                    imgArr:
+                      type: array
+                      items:
+                        properties:
+                          fileName:
+                            description: 品牌相关资料文件名
+                            type: string
+                          URL:
+                            description: 资料下载url
+                            type: string
+
+  /aboutus/news:
+    get:
+      tags:
+        - 关于
+      description: 公司动态
+      produces:
+        - application/json
+      responses:
+        200:
+          description: sucess
+          schema:
+            properties:
+              seccuess:
+                type: integer
+              data:
+                type: array
+                items:
+                  properties:
+                    title:
+                      type: string
+                      description: 新闻标题
+                    summary:
+                      type: string
+                      description: 摘要
+                    content:
+                      type: string
+                      description: 内容
+                    date:
+                      type: string
+                      format: dateTime
+                      description: 日期
+  /aboutus/video:
+    get:
+      tags:
+        - 关于
+      description: 视频中心
+      produces:
+        - application/json
+      responses:
+        200:
+          description: sucess
+          schema:
+            properties:
+              seccuess:
+                type: integer
+              data:
+                type: array
+                items:
+                  properties:
+                    title:
+                      type: string
+                      description: 视频标题
+                    imgURL:
+                      type: string
+                      description: 视频展示图url
+                    videoURL:
+                      type: string
+                      description: 视频url
+                    date:
+                      type: string
+                      format: dateTime
+                      description: 日期
+  /aboutus/contactus:
+    post:
+      tags:
+          - 关于
+      summary: 联系我们
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - name: username
+          description: 姓名
+          in: formData
+          type: string
+          required: true
+        - name: phone
+          description: 手机
+          in: formData
+          type: string
+          required: true
+        - name: email
+          description: email
+          in: formData
+          type: string
+        - name: content
+          description: 内容
+          in: formData
+          type: string
+          required: true
+        - name: captcha
+          description: 验证码
+          in: formData
+          type: string
+      responses:
+        '200':
+          description: success
+          schema:
+            properties:
+              success:
+                type: integer
+                minimum: 1
+                maximum: 1
+        '400':
+          description: fail
+          schema:
+            properties:
+              err_code:
+                type: integer
+              msg:
+                type: string
+    get:
+      tags:
+          - 关于
+      description: 获取联系我们页面所需数据
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            properties:
+              success:
+                type: integer
+              data:
+                type: object
+                properties:
+                  captchaImgURL:
+                    type: string
+
+  /cooperation/join:
+    post:
+      tags:
+          - 合作
+      summary: 代理加盟表单提交
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - name: companyName
+          description: 公司名称
+          in: formData
+          type: string
+          required: true
+        - name: trade
+          description: 行业属性
+          in: formData
+          type: string
+          required: true
+        - name: blNumber
+          description: 营业执照号 business licence No.
+          in: formData
+          type: string
+          required: true
+        - name: username
+          description: 姓名
+          in: formData
+          type: string
+          required: true
+        - name: phone
+          description: 手机
+          in: formData
+          type: string
+          required: true
+        - name: address
+          description: 公司地址
+          in: formData
+          type: string
+          required: true
+        - name: zipcode
+          description: 邮编
+          in: formData
+          type: string
+          required: true
+        - name: tel
+          description: 公司电话
+          in: formData
+          type: string
+          required: true
+        - name: email
+          description: 公司邮箱
+          in: formData
+          type: string
+        - name: captcha
+          description: 验证码
+          in: formData
+          type: string
+      responses:
+        '200':
+          description: success
+          schema:
+            properties:
+              success:
+                type: integer
+                minimum: 1
+                maximum: 1
+              msg:
+                type: string
+                description: 后台返回信息
+        '400':
+          description: fail
+          schema:
+            properties:
+              err_code:
+                type: integer
+              msg:
+                type: string
+    get:
+      tags:
+          - 合作
+      description: 获取代理家门该页面所需数据（目前仅为验证码）
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            properties:
+              success:
+                type: integer
+              data:
+                type: object
+                properties:
+                  captchaImgURL:
+                    type: string
+
+definitions:
+  commonQuestion:
+    type: object
+    properties:
+      product:
+        description: 产品问题
+        type: array
+        items:
+          properties:
+            question:
+              type: string
+            answer:
+              type: string
+      usage:
+        description: 使用问题
+        type: array
+        items:
+          properties:
+            question:
+              type: string
+            answer:
+              type: string
+      install:
+        description: 安装问题
+        type: array
+        items:
+          properties:
+            question:
+              type: string
+            answer:
+              type: string
+      aftersale:
+        description: 售后问题
+        type: array
+        items:
+          properties:
+            question:
+              type: string
+            answer:
+              type: string
+      other:
+        description: 其他问题
+        type: array
+        items:
+          properties:
+            question:
+              type: string
+            answer:
+              type: string
