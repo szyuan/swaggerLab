@@ -1,0 +1,36 @@
+swagger: '2.0'
+info:
+  description:
+  version:
+  title:
+  contact:
+    email:
+schemes:
+  - http
+host:
+basePath:
+tags:
+  - name: default
+    description: 默认
+paths:
+  /foo:
+    get:
+      tags:
+        - default
+      summary:
+      produces:
+        - application/json
+      responses:
+        '200':
+          description: success
+          schema:
+            properties:
+              sucess:
+                type: integer
+                minimum: 1
+                maximum: 1
+              data:
+                type: object
+                properties:
+                  foo:
+                    type: string

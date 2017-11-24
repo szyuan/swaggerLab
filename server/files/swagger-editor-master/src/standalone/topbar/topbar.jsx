@@ -96,18 +96,29 @@ export default class Topbar extends React.Component {
       let yamlContent = YAML.safeDump(jsContent)
       // swagger文件信息
       let info = JSON.stringify(jsContent.info);
-      info.importURL = this.getImportURL();
-      console.log(jsContent)
-      console.log(yamlContent)
+      let version = this.state.version;
+      let dirName = this.state.params.dirName;
+      // info.importURL = this.getImportURL();
+
       if(yamlContent) {
-        let fetchBody = "content="+yamlContent+"&info="+info;
+        let fetchBody = "content="+yamlContent+"&version="+version+"&proDirName="+dirName;
+        console.log(this.state.version,this.state.params.dirName);
         // 请求保存接口
-        fetch('/api/saveToProject', {
+        // fetch('http://localhost:8080/api/save', {
+        fetch('/api/save', {
           method: "POST",
           headers: {
             "Content-Type": "application/x-www-form-urlencoded"
           },
           body: fetchBody
+        }).then((res) => {
+          if(res.status == 200) {
+            alert('保存成功');
+          }else {
+            throw({msg:'请求保存接口出错', res:res});
+          }
+        }).catch((e) => {
+          throw(e);
         })
       }
     }catch(e) {
@@ -239,7 +250,8 @@ export default class Topbar extends React.Component {
       // 获取请求参数对象
       let params = _this.state.params;
       // 判断是否存在
-      let fetchURL = 'http://localhost:8080/api/save_test?proDirName='+params.dirName+'&version='+params.version;
+      // let fetchURL = 'http://localhost:8080/api/save_test?proDirName='+params.dirName+'&version='+params.version;
+      let fetchURL = '/api/save_test?proDirName='+params.dirName+'&version='+params.version;
       // console.log(params.dirName, params.version);
       fetch(fetchURL).then((res) => {
         if(res.status == 200) {
@@ -277,7 +289,8 @@ export default class Topbar extends React.Component {
   getAllPro() {
     // 请求保存接口
     // fetch('/api/projects').then((res) => {
-    return fetch('http://localhost:8080/api/projects').then((res) => {
+    // return fetch('http://localhost:8080/api/projects').then((res) => {
+    return fetch('/api/projects').then((res) => {
       return res.text();
     })
   }
@@ -313,14 +326,22 @@ export default class Topbar extends React.Component {
     }
   }
 
-  // 钩子
+  getURLParams() {
+    return this.query2Dict(window.location);
+  }
+
+  // 钩子 7 7 7 7 7 7 7 7 7 7 7 7 7 7 7
   componentDidMount() {
+    let urlParams = this.getURLParams();
     console.log(this.query2Dict(window.location));
     let importURL = this.getImportURL();
     if(importURL) {
       this.initImportFromURL(importURL);
     }
-    this.getAllPro();
+    // 如果是要新建
+    if(urlParams.new) {
+      alert();
+    }
   }
 
   render() {
@@ -411,8 +432,8 @@ export default class Topbar extends React.Component {
           </div>
         </div>
         <div className="right">
-          <button className="btn cancel" onClick={this.hideSaveModal}>Cancel</button>
-          <button className="btn" onClick={this.importFromFile}>Open file</button>
+          <button className="btn cancel" onClick={this.hideSaveModal}>取消</button>
+          <button className="btn" onClick={this.saveToProject}>保存</button>
         </div>
       </Modal>
 
