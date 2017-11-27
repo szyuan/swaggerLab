@@ -41,6 +41,7 @@
             </el-table-column>
           </el-table>
           <div slot="footer" class="dialog-footer">
+            <el-button @click="addSwaggerFile"> + 添加文档 </el-button>
             <el-button @click="dialogVisible = false">取 消</el-button>
             <el-button type="primary" @click="dialogVisible = false">确 定</el-button>
           </div>
@@ -72,6 +73,10 @@ export default {
     },
     rowClick(data, e) {
       let url = location.origin+'/tools/editor?import_url=/swagger/'+data.path;
+      window.open(url, '_blank');
+    },
+    addSwaggerFile() {
+      let url = location.origin+'/tools/editor?new=true';
       window.open(url, '_blank');
     }
   },
