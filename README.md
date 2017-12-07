@@ -1,6 +1,7 @@
 # swaggerlab
 
 > swagger lab
+一个可在本地搭建的swagger平台,可以根据项目创建swagger文件，并管理不同的版本。同时可以直接使用swagger editor进行编辑与保存
 
 ## Build Setup
 
@@ -18,4 +19,3 @@ npm run build
 npm run build --report
 ```
 
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
