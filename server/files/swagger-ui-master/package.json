@@ -42,7 +42,7 @@
   "dependencies": {
     "@braintree/sanitize-url": "^2.0.2",
     "base64-js": "^1.2.0",
-    "brace": "0.7.0",
+    "brace": "0.11.1",
     "classnames": "^2.2.5",
     "commonmark": "^0.28.1",
     "core-js": "^2.5.1",
